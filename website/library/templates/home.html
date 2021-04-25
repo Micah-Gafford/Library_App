@@ -2,6 +2,25 @@
 {% block title %} Home {% endblock %}
 {% block content %}
 
-<h3>Checked Out Books</h3>
-
+<h3 align="center">Checked Out Books</h3>
+{% if books %}
+<form method="POST">
+  {% for book in books %}
+  <div class="form-group">
+    <div class="list-group">
+      <li class="list-group-item">
+        {{book.title}}
+      </li>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="book" name="book" value="{{book.title}}">
+      <label class="form-check-label"  for="book">Return Book</label>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Return</button>
+  </div>
+</form>
+{% endif %}
 {% endblock %}

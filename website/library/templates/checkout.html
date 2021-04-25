@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %} Checkout {% endblock %}
+
+{% block content %}
+<h3 align="center">Book Checkout</h3>
+<form method="POST">
+  <div class="form-group">
+    {% for book in books %}
+    <div class="form-group">
+      <div class="list-group">
+        <li class="list-group-item">
+          {{book.title}}
+          <input type="checkbox" id="book" name="book" value="{{book.title}}">
+        </li>
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Check Out Books</button>
+  </div>
+</form>
+{% endblock %}

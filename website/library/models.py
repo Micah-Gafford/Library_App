@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 
+# schema for user table
 class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
   first_name = db.Column(db.String(100), nullable=False)
@@ -9,6 +10,7 @@ class User(db.Model, UserMixin):
   password = db.Column(db.String(150), nullable=False)
   books = db.relationship('Book', backref='user')
 
+# schema for book table
 class Book(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(100), unique=True, nullable=False)
