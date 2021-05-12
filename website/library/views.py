@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from .models import Book
+from .models import Book, History
 from . import db
 
 views = Blueprint('views', __name__)
@@ -19,6 +19,7 @@ def home():
             book.user_id = None
             book.checked_out = False
             db.session.commit()
+            flash('Books returned!', category='success')
         return redirect(url_for('views.home'))
 
     return render_template("home.html", user=current_user, books=books)
@@ -60,12 +61,20 @@ def checkout():
 
     if request.method == 'POST':
 
+        history = History.query.filter_by(user_id=current_user.id).first()
+
+        if not history:
+            history = History(user_id=current_user.id)
+
         # get book titles from form to checkout
         for title in request.form.getlist("book"):
             book = Book.query.filter_by(title=title).first()
             book.checked_out = True
             book.user_id = current_user.id
+            if book not in history.books:
+                history.books.append(book)
 
+        flash('Books have been successfully checked out!', category='success')
         db.session.commit()
 
         return redirect(url_for("views.home"))
