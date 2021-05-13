@@ -81,3 +81,11 @@ def checkout():
 
     books = Book.query.filter_by(checked_out=False).all()
     return render_template("checkout.html", books=books, user=current_user)
+
+
+@views.route('/history')
+@login_required
+def history():
+    history = History.query.filter_by(user=current_user).first()
+    books = history.books
+    return render_template("history.html", user=current_user, books=books)

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} History {% endblock %}
+
+{% block content %}
+<h3 align="center">Book Checkout History</h3>
+<div class="list-group">
+    {% for book in books %}
+        <li class="list-group-item">
+            {{book.title}} by {{book.author}}           
+        </li>
+    {% endfor %}
+</div>
+{% endblock %}
